@@ -1,47 +1,49 @@
 import '../styles/App.scss';
-//import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import adalabers from '../services/data.json';
 //import callToApi from '../services/api';
-//import localStorage from '../services/localstorage';
 
 function App() {
-  const getTitle = (text) => <h1>{text}</h1>;
+  // Estado
+  const data = adalabers;
+  console.log(data.results);
+  // Variables
+  // Eventos
 
   // api
-
-  //const [data, setData] = useState({});
-
-  /*
-  useEffect(() => {
+/*   useEffect(() => {
     callToApi().then((response) => {
       setData(response);
     });
-  }, []);
-  */
+  }, []); */
 
-  // local storage
-
-  //const [name, setName] = useState(localStorage.get('name', ''));
-  //const [email, setEmail] = useState(localStorage.get('email', ''));
-
-  //useState(localStorage.get('data', {}).name || '');
-  //useState(localStorage.get('data', {}).email || '');
-
-  /*
-  useEffect(() => {
-    localStorage.set('name', name);
-    localStorage.set('email', email);
-  }, [name, email]);
-  */
-
-  /*
-  localStorage.set('data', {
-    name: name,
-    email: email,
-  });
-  */
+  // Render
+  const renderAdalabers = () => {
+    return data.results.map( adalaber => {
+      return <tr>
+      <td>{adalaber.name}</td>
+      <td>{adalaber.counselor}</td>
+      <td>{adalaber.speciality}</td>
+      </tr>
+    })
+  }
+  
 
   return (
-    <div className="app">{getTitle('Hola mundo')}</div>
+    <div>
+      <h1>Adalabers</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Nombre</th>
+            <th>Tutora</th>
+            <th>Especialidad</th>
+          </tr>
+        </thead>
+        <tbody>{renderAdalabers()}</tbody>
+      </table>
+    </div>
+
   );
 }
 
