@@ -5,22 +5,38 @@ import callToApi from '../services/api';
 function App() {
   // Estado
   const [data, setData] = useState([]);
+  const [name, setName] = useState('');
+  const [counselor, setCounselor] = useState('');
+  const [speciality, setSpeciality] = useState('');
   // Variables
+  let newAdalaber = {};
   // Eventos
   const handeFormSubmit = (ev) =>{
     ev.preventDefault();
   }
-  const handelInputText = (ev) =>{
-    const valueInput = ev.currentTarget.value;
-    const newAdalaber = {
-      name: valueInput,
-      counselor: valueInput,
-      speciality: valueInput,
+  const handelInputName = (ev) =>{
+    const inputName = ev.currentTarget.name;
+    setName(ev.currentTarget.value)
+    newAdalaber = { 
+      [inputName]: name,
     }
   }
-
+  const handelInputCounselor = (ev) =>{
+    const inputName = ev.currentTarget.name;
+    setCounselor(ev.currentTarget.value)
+    newAdalaber = { 
+      [inputName]: name,
+    }
+  }
+  const handelInputSpeciality = (ev) =>{
+    const inputName = ev.currentTarget.name;
+    setSpeciality(ev.currentTarget.value)
+    newAdalaber = { 
+      [inputName]: name,
+    }
+  }
   const handelBtnAddAdalaber = () => {
-
+    setData({...data, newAdalaber})
   }
 
   // api
@@ -58,11 +74,11 @@ function App() {
       <h2>Añadir nueva Adalaber</h2>
       <form action="" onSubmit={handeFormSubmit}>
         <label htmlFor="name">Nombre</label>
-        <input type="text" placeholder="Ej: Sandra" onChange={handelInputText}/>
+        <input type="text" name='name' placeholder="Ej: Sandra" value={name} onChange={handelInputName}/>
         <label htmlFor="name">Tutora</label>
-        <input type="text" placeholder="Ej: Dayana" onChange={handelInputText}/>
+        <input type="text" name='counselor' placeholder="Ej: Dayana" value={counselor} onChange={handelInputCounselor}/>
         <label htmlFor="name">Especialidad</label>
-        <input type="text" placeholder="Ej: JavaScript" onChange={handelInputText}/>
+        <input type="text" name='speciality' placeholder="Ej: JavaScript" value={speciality} onChange={handelInputSpeciality} />
         <button onClick={handelBtnAddAdalaber}>Añadir</button>
       </form>
     </div>
