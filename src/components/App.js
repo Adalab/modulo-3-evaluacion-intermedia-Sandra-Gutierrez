@@ -9,34 +9,27 @@ function App() {
   const [counselor, setCounselor] = useState('');
   const [speciality, setSpeciality] = useState('');
   // Variables
-  let newAdalaber = {};
+  
   // Eventos
   const handeFormSubmit = (ev) =>{
     ev.preventDefault();
   }
   const handelInputName = (ev) =>{
-    const inputName = ev.currentTarget.name;
     setName(ev.currentTarget.value)
-    newAdalaber = { 
-      [inputName]: name,
-    }
   }
   const handelInputCounselor = (ev) =>{
-    const inputName = ev.currentTarget.name;
     setCounselor(ev.currentTarget.value)
-    newAdalaber = { 
-      [inputName]: name,
-    }
   }
   const handelInputSpeciality = (ev) =>{
-    const inputName = ev.currentTarget.name;
     setSpeciality(ev.currentTarget.value)
-    newAdalaber = { 
-      [inputName]: name,
-    }
   }
   const handelBtnAddAdalaber = () => {
-    setData({...data, newAdalaber})
+    setData([...data, {
+      id: data.length,
+      name: name,
+      counselor: counselor,
+      speciality: speciality,
+    }])
   }
 
   // api
