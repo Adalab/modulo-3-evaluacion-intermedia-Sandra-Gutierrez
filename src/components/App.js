@@ -23,7 +23,8 @@ function App() {
   const handelInputSpeciality = (ev) =>{
     setSpeciality(ev.currentTarget.value)
   }
-  const handelBtnAddAdalaber = () => {
+  const handelBtnAddAdalaber = (ev) => {
+    ev.preventDefault();
     setData([...data, {
       id: data.length,
       name: name,
@@ -53,8 +54,11 @@ function App() {
   // Return HTML
   return (
     <div>
-      <h1>Adalabers</h1>
-      <table>
+      <header>
+        <h1>Adalabers</h1>
+      </header>
+      <main>
+        <table>
         <thead>
           <tr>
             <th>Nombre</th>
@@ -74,8 +78,8 @@ function App() {
         <input type="text" name='speciality' placeholder="Ej: JavaScript" value={speciality} onChange={handelInputSpeciality} />
         <button onClick={handelBtnAddAdalaber}>Añadir</button>
       </form>
+      </main>
     </div>
-
   );
 }
 
