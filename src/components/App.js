@@ -8,7 +8,6 @@ function App() {
   const [name, setName] = useState('');
   const [counselor, setCounselor] = useState('');
   const [speciality, setSpeciality] = useState('');
-  // Variables
   
   // Eventos
   const handeFormSubmit = (ev) =>{
