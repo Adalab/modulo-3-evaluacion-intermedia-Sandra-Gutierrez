@@ -58,39 +58,46 @@ function App() {
   // Render
   const renderAdalabers = () => {
     return data
-    .filter((adalaber) => {
-      if(filterCounselor === 'All'){
-        return true;
-      }else{
-        return adalaber.counselor === filterCounselor;
-      }
-    })
-    .filter((adalaber) => adalaber.name.toLocaleLowerCase().includes(filterName.toLocaleLowerCase()))
-    .map((adalaber) => {
-      return (
-        <tr key={adalaber.id}>
-          <td>{adalaber.name}</td>
-          <td>{adalaber.counselor}</td>
-          <td>{adalaber.speciality}</td>
-          <td>{adalaber.social_networks.map((redes) => {
-            return <a href={redes.url}>{redes.name}</a>
-          })}</td>
-        </tr>
-      );
-    });
+      .filter((adalaber) => {
+        if (filterCounselor === "All") {
+          return true;
+        } else {
+          return adalaber.counselor === filterCounselor;
+        }
+      })
+      .filter((adalaber) =>
+        adalaber.name
+          .toLocaleLowerCase()
+          .includes(filterName.toLocaleLowerCase())
+      )
+      .map((adalaber) => {
+        return (
+          <tr key={adalaber.id}>
+            <td>{adalaber.name}</td>
+            <td>{adalaber.counselor}</td>
+            <td>{adalaber.speciality}</td>
+{/*             <td className='main__table--rrss'>
+              {adalaber.social_networks.map((redes) => {
+                return <a href={redes.url}>{redes.name}</a>;
+              })}
+            </td> */}
+          </tr>
+        );
+      });
   };
 
   // Return HTML
   return (
-    <div>
-      <header>
-        <h1>Adalabers</h1>
+    <>
+      <header className="header">
+        <h1 className="header__title">Adalabers</h1>
       </header>
-      <main>
-        <form action="">
-          <label htmlFor="name">Nombre:</label>
+      <main className="main">
+        <form className="main__find" action="" onSubmit={(ev) => ev.preventDefault()}>
+          <label htmlFor="name" >Nombre</label>
           <input
             type="text"
+            placeholder='Ej. Mari Carmen'
             onChange={handleChangeFilterName}
             value={filterName}
           />
@@ -107,8 +114,8 @@ function App() {
             <option value="Iván">Iván</option>
           </select>
         </form>
-        <table>
-          <thead>
+        <table className="main__table">
+          <thead className='main__table--head'>
             <tr>
               <th>Nombre</th>
               <th>Tutora</th>
@@ -118,36 +125,38 @@ function App() {
           </thead>
           <tbody>{renderAdalabers()}</tbody>
         </table>
-        <h2>Añadir nueva Adalaber</h2>
-        <form action="" onSubmit={(ev) => ev.preventDefault()}>
-          <label htmlFor="name">Nombre</label>
-          <input
-            type="text"
-            name="name"
-            placeholder="Ej: Sandra"
-            value={newAdalaberData.name}
-            onChange={handleInputName}
-          />
-          <label htmlFor="name">Tutora</label>
-          <input
-            type="text"
-            name="counselor"
-            placeholder="Ej: Dayana"
-            value={newAdalaberData.counselor}
-            onChange={handleInputCounselor}
-          />
-          <label htmlFor="name">Especialidad</label>
-          <input
-            type="text"
-            name="speciality"
-            placeholder="Ej: JavaScript"
-            value={newAdalaberData.speciality}
-            onChange={handleInputSpeciality}
-          />
-          <button onClick={handleBtnAddAdalaber}>Añadir</button>
-        </form>
+        <section className="main__newAdalaber">
+          <h3 className='main__newAdalaber--title'>Añadir nueva Adalaber</h3>
+          <form action="" onSubmit={(ev) => ev.preventDefault()}>
+            <label htmlFor="name">Nombre</label>
+            <input
+              type="text"
+              name="name"
+              placeholder="Ej: Sandra"
+              value={newAdalaberData.name}
+              onChange={handleInputName}
+            />
+            <label htmlFor="name">Tutora</label>
+            <input
+              type="text"
+              name="counselor"
+              placeholder="Ej: Dayana"
+              value={newAdalaberData.counselor}
+              onChange={handleInputCounselor}
+            />
+            <label htmlFor="name">Especialidad</label>
+            <input
+              type="text"
+              name="speciality"
+              placeholder="Ej: JavaScript"
+              value={newAdalaberData.speciality}
+              onChange={handleInputSpeciality}
+            />
+            <button className='main__newAdalaber--btn' onClick={handleBtnAddAdalaber}>Añadir</button>
+          </form>
+        </section>
       </main>
-    </div>
+    </>
   );
 }
 
