@@ -5,34 +5,13 @@ import callToApi from "../services/api";
 function App() {
   // Estado
   const [data, setData] = useState([]);
-  const [name, setName] = useState("");
-  const [counselor, setCounselor] = useState("");
-  const [speciality, setSpeciality] = useState("");
-
-  // Eventos
-  const handeFormSubmit = (ev) => {
-    ev.preventDefault();
-  };
-  const handelInputName = (ev) => {
-    setName(ev.currentTarget.value);
-  };
-  const handelInputCounselor = (ev) => {
-    setCounselor(ev.currentTarget.value);
-  };
-  const handelInputSpeciality = (ev) => {
-    setSpeciality(ev.currentTarget.value);
-  };
-  const handelBtnAddAdalaber = () => {
-    setData([
-      ...data,
-      {
-        id: data.length,
-        name: name,
-        counselor: counselor,
-        speciality: speciality,
-      },
-    ]);
-  };
+  const [newAdalaberData, setNewAdalaberData] = useState({
+    name: "",
+    counselor: "",
+    speciality: "",
+  });
+  const [filterName, setFilterName] = useState("");
+  const [filterCounselor, setFilterCounselor] = useState("All");
 
   // api
   useEffect(() => {
@@ -41,9 +20,53 @@ function App() {
     });
   }, []);
 
+  // Eventos
+  const handleInputName = (ev) => {
+    setNewAdalaberData({
+      ...newAdalaberData,
+      name: ev.currentTarget.value,
+    });
+  };
+  const handleInputCounselor = (ev) => {
+    setNewAdalaberData({
+      ...newAdalaberData,
+      counselor: ev.currentTarget.value,
+    });
+  };
+  const handleInputSpeciality = (ev) => {
+    setNewAdalaberData({
+      ...newAdalaberData,
+      speciality: ev.currentTarget.value,
+    });
+  };
+  const handleBtnAddAdalaber = () => {
+    newAdalaberData.id = data.length;
+    setData([...data, newAdalaberData]);
+    setNewAdalaberData({
+      name: "",
+      counselor: "",
+      speciality: "",
+    });
+  };
+  const handleChangeFilterName = (ev) => {
+    setFilterName(ev.currentTarget.value);
+  };
+  const handleChangeFilterCounselor = (ev) => {
+    setFilterCounselor(ev.currentTarget.value);
+  };
+
   // Render
   const renderAdalabers = () => {
-    return data.map((adalaber) => {
+    return data
+    .filter((adalaber) => {
+      if(filterCounselor === 'All'){
+        return true;
+      }else{
+        return adalaber.counselor === filterCounselor;
+      }
+    })
+    .filter((adalaber) => adalaber.name.toLocaleLowerCase().includes(filterName.toLocaleLowerCase()))
+    .map((adalaber) => {
       return (
         <tr key={adalaber.id}>
           <td>{adalaber.name}</td>
@@ -61,6 +84,26 @@ function App() {
         <h1>Adalabers</h1>
       </header>
       <main>
+        <form action="">
+          <label htmlFor="name">Nombre:</label>
+          <input
+            type="text"
+            onChange={handleChangeFilterName}
+            value={filterName}
+          />
+          <label htmlFor="counselor">Escoge una tutora</label>
+          <select
+            name="counselor"
+            id=""
+            onChange={handleChangeFilterCounselor}
+            value={filterCounselor}
+          >
+            <option value="All">Cualquiera</option>
+            <option value="Yanelis">Yanelis</option>
+            <option value="Dayana">Dayana</option>
+            <option value="Iván">Iván</option>
+          </select>
+        </form>
         <table>
           <thead>
             <tr>
@@ -72,32 +115,32 @@ function App() {
           <tbody>{renderAdalabers()}</tbody>
         </table>
         <h2>Añadir nueva Adalaber</h2>
-        <form action="" onSubmit={handeFormSubmit}>
+        <form action="" onSubmit={(ev) => ev.preventDefault()}>
           <label htmlFor="name">Nombre</label>
           <input
             type="text"
             name="name"
             placeholder="Ej: Sandra"
-            value={name}
-            onChange={handelInputName}
+            value={newAdalaberData.name}
+            onChange={handleInputName}
           />
           <label htmlFor="name">Tutora</label>
           <input
             type="text"
             name="counselor"
             placeholder="Ej: Dayana"
-            value={counselor}
-            onChange={handelInputCounselor}
+            value={newAdalaberData.counselor}
+            onChange={handleInputCounselor}
           />
           <label htmlFor="name">Especialidad</label>
           <input
             type="text"
             name="speciality"
             placeholder="Ej: JavaScript"
-            value={speciality}
-            onChange={handelInputSpeciality}
+            value={newAdalaberData.speciality}
+            onChange={handleInputSpeciality}
           />
-          <button onClick={handelBtnAddAdalaber}>Añadir</button>
+          <button onClick={handleBtnAddAdalaber}>Añadir</button>
         </form>
       </main>
     </div>
