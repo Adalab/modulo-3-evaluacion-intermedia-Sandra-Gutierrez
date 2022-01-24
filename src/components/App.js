@@ -9,6 +9,7 @@ function App() {
     name: "",
     counselor: "",
     speciality: "",
+    social_networks: [{}],
   });
   const [filterName, setFilterName] = useState("");
   const [filterCounselor, setFilterCounselor] = useState("All");
@@ -41,11 +42,13 @@ function App() {
   };
   const handleBtnAddAdalaber = () => {
     newAdalaberData.id = data.length;
+    newAdalaberData.social_networks = [{}];
     setData([...data, newAdalaberData]);
     setNewAdalaberData({
       name: "",
       counselor: "",
       speciality: "",
+      social_networks: [{}],
     });
   };
   const handleChangeFilterName = (ev) => {
@@ -76,11 +79,11 @@ function App() {
             <td>{adalaber.name}</td>
             <td>{adalaber.counselor}</td>
             <td>{adalaber.speciality}</td>
-{/*             <td className='main__table--rrss'>
-              {adalaber.social_networks.map((redes) => {
-                return <a href={redes.url}>{redes.name}</a>;
+            <td className='main__table--rrss'>
+              {adalaber.social_networks.map((redes, index) => {
+                return <a key={index} href={redes.url}>{redes.name}</a>;
               })}
-            </td> */}
+            </td>
           </tr>
         );
       });
